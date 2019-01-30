@@ -1,14 +1,13 @@
-import _ from 'lodash';
+/*import _ from 'lodash';
 import express from 'express';
 import mongoose from 'mongoose';
 import autoIncrement from 'mongoose-auto-increment';
 import bodyParser from 'body-parser';
 import querystring from 'querystring';
 import xml from 'xml';
-import {graphql} from 'graphql'
-import graphqlHTTP from 'express-graphql';
 
 import templateGQLSchema from './graphql/schema/Schema';
+import swagger from './swagger.json';
 
 const app = express();
 app.use(bodyParser.json());         // to support JSON-encoded bodies
@@ -23,45 +22,37 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS, PATCH");
   next();
-});
+});*/
 
+/*
 mongoose.connect('mongodb://localhost:27017/local');
 const db = mongoose.connection;
 autoIncrement.initialize(db);
 
 const Schema = mongoose.Schema;
 export const templateSchema = new Schema({
-  info: {
+  id: Number,
+  name: String,
+  displayName: String,
+  author: {
     id: Number,
-    name: String,
-    author: {
-      id: Number,
-      fullName: String,
-    }
+    fullName: String,
   },
-  sections: [{
-    id: String,
-    title: String,
-    fields: [{
-      id: String,
-      fieldType: String,
-      label: String,
-      accessor: String,
-      validation: String,
-    }]
-  }],
+  templateJSON: String,
+  templateJSX: String,
 }, {
   collection: 'TemplatesList',
 });
 
 templateSchema.plugin(autoIncrement.plugin, 'Template');
 export const Template = mongoose.model('Template', templateSchema);
-
+*/
 /*app.use('/graphql', graphqlHTTP (req => ({
   schema: templateGQLSchema,
   graphiql: true,
 })));*/
 
+/*
 db.on('error', () => {
   console.log('---FAILED to connect to mongoose');
 });
@@ -69,10 +60,16 @@ db.on('error', () => {
 db.once('open', () => {
   console.log('+++Connected to mongoose');
 });
+*/
+/*
 
 // start the server
 app.listen(3001, () => {
   console.log("+++Express Server is Running!!!");
+});
+
+app.get('/swagger', (req, res) => {
+  res.json(swagger);
 });
 
 app.route('/templates')
@@ -81,7 +78,11 @@ app.route('/templates')
       if (!err) {
         console.log('+++Templates acquired', resp);
         res.json({
-          data: resp.map(i => ({id: i._id, info: i.info, sections: i.sections})),
+          data: resp/!*_.map(resp, i => ({
+            id: i._id,
+            templateJSON: JSON.parse(i.templateJSON),
+            templateJSX: i.templateJSX,
+          }))*!/,
         });
       } else {
         console.log('---Templates acquiring failed', err);
@@ -89,11 +90,14 @@ app.route('/templates')
     });
   })
   .post((req, res) => {
-    const {info, sections} = req.body;
+    const { info, template } = req.body;
 
     const tpl = new Template({
-      info,
-      sections,
+      name,
+      displayName,
+      author,
+      templateJSON: JSON.stringify(templateJSON),
+      templateJSX: templateJSX
     });
 
     tpl.save((err, res) => {
@@ -101,14 +105,14 @@ app.route('/templates')
         console.log(`---Template save failed ${err}`);
       }
 
-      console.log(`+++Template saved successfully: ${info}: ${sections}`);
+      console.log(`+++Template saved successfully: ${info}`);
     });
 
     res.send('ok');
   });
 
 
-app.get('/templates/:id', templateLookup, (req, res) => {
+app.get('/templates/:id', templateLookupById, (req, res) => {
   const {format} = req.query;
 
   console.log('+++ GET template', req.template);
@@ -165,8 +169,19 @@ app.get('/templates/:id', templateLookup, (req, res) => {
     res.send(xmlString);
   }
 });
+*/
 
-app.patch('/templates/:id', templateLookup, (req, res) => {
+/*
+app.get('/template-lookup/:name', templateLookupByName, (req, res) => {
+  console.log('+++ GET template-lookup', req.template);
+
+  res.json({
+    success: true,
+    data: req.template,
+  });
+});
+
+app.patch('/templates/:id', templateLookupById, (req, res) => {
   const {id} = req.template;
 
   const template = JSON.parse(req.body);
@@ -196,7 +211,7 @@ app.patch('/templates/:id', templateLookup, (req, res) => {
   });
 });
 
-function templateLookup(req, res, next) {
+function templateLookupById(req, res, next) {
   const { id } = req.params;
 
   if (!id) {
@@ -210,13 +225,46 @@ function templateLookup(req, res, next) {
       return;
     }
     console.log('+++Template found', resp);
-    const { id, info, sections } = resp;
+    const { id, info, template } = resp;
     req.template = {
       id,
       info,
-      sections,
+      template: JSON.parse(template)
+    };
+
+    next();
+  });
+}
+
+function templateLookupByName(req, res, next) {
+  const { name } = req.params;
+
+  if (!name) {
+    res.status(404).send('Template Not Found');
+  }
+
+  console.log('[INFO] templateLookupByName', name);
+
+  Template.find({ 'info.name': name }).exec((err, resp) => {
+    if (err) {
+      console.log('---Failed to search for template by name');
+      res.status(404).send('---Failed to get template, ' + err);
+      return;
+    }
+    if (!resp.length) {
+      console.log('---Failed to search for template by name. No results found.')
+      res.status(404).send('---Failed to find template by name');
+      return;
+    }
+    console.log('+++Template lookup found by name', resp);
+    const { _id: id, info, template } = resp[0];
+    req.template = {
+      id,
+      info,
+      template: JSON.parse(template)
     };
 
     next();
   });
 };
+*/
