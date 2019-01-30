@@ -15,8 +15,7 @@
     "seed": "knex seed:run",
     "migrate:make": "knex migrate:make",
     "migrate:rollback": "knex migrate:rollback",
-    "lint": "eslint client server; exit 0",
-    "prestart": "migrate"
+    "lint": "eslint client server; exit 0"
   },
   "author": "",
   "license": "ISC",
