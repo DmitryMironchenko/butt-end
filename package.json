@@ -5,8 +5,9 @@
   "main": "server/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "babel-node": "babel-node --presets es2015,stage-3",
-    "start": "nodemon --exec npm run babel-node server/app.js",
+    "babel-node": "babel-node @babel/preset-env",
+    "start": "babel-node server/app.js",
+    "dev": "nodemon --exec npm start",
     "clean": "rimraf node_modules && rimraf dist && npm install",
     "webpack:dev": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.config.dev.js",
     "webpack:prod": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.config.prod.js",
