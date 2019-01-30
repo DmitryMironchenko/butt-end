@@ -1,14 +1,12 @@
 require('dotenv').config();
 
-console.log('DB_CLIENT', process.env);
-
 module.exports = {
-  client: process.env.DB_CLIENT,
+  client: process.env.RDS_ENGINE,
   connection: {
-    host: process.env.DB_HOST || '127.0.0.1',
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    host: process.env.RDS_HOSTNAME || '127.0.0.1',
+    user: process.env.RDS_USERNAME,
+    password: process.env.RDS_PASSWORD,
+    database: process.env.RDS_DB_NAME,
     charset: 'utf8'
   },
   migrations: {

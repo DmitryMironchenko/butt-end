@@ -21,7 +21,7 @@ export function findAll(req, res) {
       }
     )
     .catch(err => {
-      console.log('[ERROR]: failed to get templates', e);
+      console.log('[ERROR]: failed to get templates', err);
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
         error: err
       });}

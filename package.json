@@ -12,9 +12,11 @@
     "webpack:dev": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.config.dev.js",
     "webpack:prod": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.config.prod.js",
     "migrate": "knex migrate:latest",
+    "seed": "knex seed:run",
     "migrate:make": "knex migrate:make",
     "migrate:rollback": "knex migrate:rollback",
-    "lint": "eslint client server; exit 0"
+    "lint": "eslint client server; exit 0",
+    "prestart": "migrate"
   },
   "author": "",
   "license": "ISC",
