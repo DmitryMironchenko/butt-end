@@ -5,8 +5,8 @@
   "main": "server/app.js",
   "scripts": {
     "build": "babel server -d dist",
-    "babel-node": "babel-node @babel/preset-env",
-    "start": "nodemon babel-node server/app.js",
+    "babel-node": "",
+    "start": "nodemon --exec babel-node server/app.js",
     "serve": "npm run build && node dist/app.js",
     "clean": "rimraf node_modules && rimraf dist && npm install",
     "webpack:dev": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.config.dev.js",
@@ -39,6 +39,7 @@
     "mongoose-auto-increment": "^5.0.1",
     "morgan": "^1.9.1",
     "mysql": "^2.16.0",
+    "node-fetch": "^2.3.0",
     "querystring": "^0.2.0",
     "xml": "^1.0.1"
   },

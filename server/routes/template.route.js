@@ -12,9 +12,9 @@ router.route('/')
     templateCtrl.findAll(req, res);
   });
 
-export default router;
-
 router.route('/:name')
   .get((req, res) => {
     templateCtrl.findByName(req, res);
   });
+
+export default router;
