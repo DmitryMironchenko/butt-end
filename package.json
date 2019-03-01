@@ -20,6 +20,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.3.4",
+    "@babel/runtime": "^7.3.4",
     "bcrypt": "^3.0.3",
     "body-parser": "^1.15.2",
     "bookshelf": "^0.14.2",
