@@ -1,7 +1,7 @@
 import express from 'express';
 import * as templateCtrl from '../controllers/template.controller';
 import HttpStatus from 'http-status-codes';
-import * as TransportationCtrl from '../controllers/transportation';
+import * as TransportationCtrl from '../controllers/lyft.controller';
 
 const router = express.Router();
 

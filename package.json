@@ -7,6 +7,7 @@
     "build": "babel server -d dist",
     "babel-node": "",
     "start": "nodemon --exec babel-node server/app.js",
+    "debug": "node --inspect-brk ./dist/app.js",
     "serve": "npm run build && node dist/app.js",
     "clean": "rimraf node_modules && rimraf dist && npm install",
     "webpack:dev": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.config.dev.js",
@@ -43,6 +44,7 @@
     "mysql": "^2.16.0",
     "node-fetch": "^2.3.0",
     "querystring": "^0.2.0",
+    "twitter-node-client": "0.0.6",
     "xml": "^1.0.1"
   },
   "devDependencies": {
